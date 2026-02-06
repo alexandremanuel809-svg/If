@@ -1,0 +1,28 @@
+input, button{
+  background-color: #4da3ff;
+}
+body{background:linear-gradient(-45deg,red,blue,green,yellow,pink,white,black);animation: moverCores 6s ease infinite;;background-size:400% 400%;height: 100vh;flex-direction: column;display: flex;padding: 50px;margin: 2px;align-items: center;
+  }
+  @keyframes moverCores{
+    0%{
+      background-position: 0% 50%;
+    }
+    50%{
+      background-position: 100% 50%;
+    }
+    100%{
+      background-position: 0% 50%;
+    }
+  }
+  h1{
+    text-align: center;color:#4da3ff;font-size: 40px;
+  }
+  input{
+    border: solid red;border-radius: 7px;height: 5%;padding: 4px;margin: 4px;width: 70%;
+   }
+    .login{
+      display: flex;width: 140%;
+    }
+  button{
+    border-radius: 20px;font-size: 30px;border: solid red;margin: 20px;
+  }
