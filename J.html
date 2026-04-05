@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<title>Programador Web - texte completo de saber se entendes HTML da 10°classe </title>
+<style>
+body{
+    font-family: Arial;
+    margin:0;
+    padding:20px;
+    background:#0f172a;
+    color:white;
+    text-align:center;
+}
+
+header{
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    border:none;
+    border-radius:6px;
+    background:#7c3aed;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#6d28d9;
+}
+
+.hidden{
+    display:none;
+}
+
+.box{
+    background:#1e293b;
+    padding:20px;
+    margin-top:20px;
+    border-radius:10px;
+    text-align:left;
+}
+
+.pergunta{
+    margin:15px 0;
+    text-align:left;
+}
+
+input[type="radio"]{
+    margin-right:8px;
+}
+
+input[type="text"]{
+    padding:8px;
+    border-radius:5px;
+    border:none;
+    width:200px;
+}
+
+a{
+    color:#facc15;
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Programador Web</h1>
+    <p>texte Completo de HTML e CSS</p>
+</header>
+
+<div id="conteudo" class="box">
+    <h2>Bem-vindo ao 1º Trimestre - HTML</h2>
+    <p>
+    Nesta matéria você vai aprender tudo que será cobrado nas provas do 1º trimestre: tags, atributos, listas, links, imagens e formulários.
+    Para saber mais sobre HTML, veja a <a href="https://pt.wikipedia.org/wiki/HTML" target="_blank">Wikipédia - HTML</a>.
+    </p>
+    <button onclick="iniciarTrimestre(1)">Começar 1º Trimestre</button>
+</div>
+
+<div id="areaProva" class="box hidden">
+    <h2 id="tituloProva"></h2>
+    <div id="perguntas"></div>
+    <button onclick="corrigir()">Finalizar Prova</button>
+    <h3 id="resultado"></h3>
+</div>
+
+<div id="certificado" class="box hidden">
+    <h2> Parabéns! Você terminou o curso!</h2>
+    <p>Aqui está sua média final.</p>
+    <h3 id="mediaFinal"></h3>
+
+    <div id="numeroArea">
+        <p>Digite seu número para receber o certificado:</p>
+        <input type="text" id="numero" placeholder="Seu número">
+        <button onclick="enviarNumero()">Enviar</button>
+        <p id="mensagemFinal"></p>
+    </div>
+</div>
+
+<script>
+let trimestreAtual = 1;
+let provaAtual = 1;
+let notas = [];
+
+// Provas com questões e opções diferentes para cada prova
+let provas = {
+    1:[
+        [ // Avaliação Inicial
+            {perg:"Qual tag cria um parágrafo?", ops:["div","p","span"], res:"p"},
+          
+            {perg:"Qual atributo define a URL de um link?", ops:["src","href","link"], res:"href"}
+        ],
+        [ // Avaliação Avançada
+            {perg:"Qual tag define lista não ordenada?", ops:["ul","ol","li"], res:"ul"},
+            {perg:"Atributo de texto alternativo da imagem?", ops:["alt","title","text"], res:"alt"}
+        ],
+        [ // Prova do Curso
+            {perg:"Qual a ordem correta de uma página HTML?", ops:["html->body->head","html->head->body","body->head->html"], res:"html->head->body"},
+          
+            {perg:"Atributo que define o tipo de input?", ops:["type","kind","format"], res:"type"}
+        ],
+        [ // Prova Trimestral
+            
+            {perg:"Como abrir link em nova aba?", ops:["target='_blank'","newtab","open"], res:"target='_blank'"},
+            {perg:"HTML significa?", ops:["Hyper Text Markup Language","High Tech Machine Language","Home Tool Markup Language"], res:"Hyper Text Markup Language"}
+        ]
+    ],
+    2:[
+        [ // Avaliação Inicial
+            {perg:"O que é CSS?", ops:["Cascading Style Sheets","Code Style Script","Computer Style Sheets"], res:"Cascading Style Sheets"},
+            {perg:"Como alterar cor do texto?", ops:["color","background-color","font-size"], res:"color"},
+            {perg:"Como adicionar borda?", ops:["border","outline","stroke"], res:"border"}
+        ],
+        [ // Avaliação Avançada
+            {perg:"Como centralizar elementos com Flexbox?", ops:["justify-content:center;","align-items:left;","flex-direction:right;"], res:"justify-content:center;"},
+            {perg:"Propriedade que define direção do flex?", ops:["flex-direction","direction","align-content"], res:"flex-direction"},
+            {perg:"O que faz display:flex?", ops:["Ativa Flexbox","Cria tabela","Oculta elemento"], res:"Ativa Flexbox"}
+        ],
+        [ // Prova do Curso
+            {perg:"Seletores universais selecionam todos elementos?", ops:["*","all","every"], res:"*"},
+            {perg:"Como definir padding?", ops:["padding:10px;","margin:10px;","space:10px;"], res:"padding:10px;"},
+            {perg:"Cor de fundo da página?", ops:["background-color","color","font-color"], res:"background-color"}
+        ],
+        [ // Prova Trimestral
+            {perg:"Flexbox alinha itens verticalmente?", ops:["align-items","justify-content","flex-direction"], res:"align-items"},
+            {perg:"Flexbox alinha itens horizontalmente?", ops:["justify-content","align-items","flex-direction"], res:"justify-content"},
+            {perg:"Flexbox permite reorganizar ordem visual?", ops:["order","position","float"], res:"order"}
+        ]
+    ],
+    3:[
+        [ // Avaliação Inicial
+            {perg:"CSS Grid cria layout em?", ops:["Grade","Lista","Tabela"], res:"Grade"},
+            {perg:"Propriedade linhas Grid?", ops:["grid-template-rows","rows","grid-rows"], res:"grid-template-rows"},
+            {perg:"Propriedade colunas Grid?", ops:["grid-template-columns","columns","grid-cols"], res:"grid-template-columns"}
+        ],
+        [ // Avaliação Avançada
+            {perg:"Grid define espaços entre colunas?", ops:["grid-gap","gap","space"], res:"grid-gap"},
+            {perg:"Grid area define?", ops:["Área específica","Linha","Coluna"], res:"Área específica"},
+            {perg:"Grid-template define?", ops:["Linhas e colunas","Altura","Largura"], res:"Linhas e colunas"}
+        ],
+        [ // Prova do Curso
+            {perg:"Como centralizar item Grid?", ops:["justify-items:center;","align-items:left;","place-items:none;"], res:"justify-items:center;"},
+            {perg:"Como fazer responsividade Grid?", ops:["media queries","flexbox","inline"], res:"media queries"},
+            {perg:"Grid-template-areas define?", ops:["Áreas nomeadas","Linhas","Colunas"], res:"Áreas nomeadas"}
+        ],
+        [ // Prova Trimestral
+            {perg:"Responsividade ajusta layout?", ops:["Sim","Não","Talvez"], res:"Sim"},
+            {perg:"Grid é melhor que Flexbox para?", ops:["Layouts complexos","Textos","Imagens simples"], res:"Layouts complexos"},
+            {perg:"Projeto final integra?", ops:["HTML e CSS","JS","PHP"], res:"HTML e CSS"}
+        ]
+    ]
+};
+
+let materias = {
+    1: `<h2>Matéria 1º Trimestre - HTML</h2>
+        <p>Aprenda HTML: tags, atributos, listas, links, imagens, formulários. <a href="https://pt.wikipedia.org/wiki/HTML" target="_blank">Leia mais na Wikipédia</a>.</p>`,
+    2: `<h2>Matéria 2º Trimestre - CSS e Flexbox</h2>
+        <p>Aprenda CSS: cores, fontes, margens, padding, box-model e Flexbox. <a href="https://pt.wikipedia.org/wiki/CSS" target="_blank">Leia mais na Wikipédia</a>.</p>`,
+    3: `<h2>Matéria 3º Trimestre - CSS Grid e Projeto Final</h2>
+        <p>Aprenda CSS Grid, responsividade e integre HTML+CSS no projeto final. <a href="https://pt.wikipedia.org/wiki/CSS_Grid_Layout" target="_blank">Leia mais na Wikipédia</a>.</p>`
+};
+
+function iniciarTrimestre(num){
+    trimestreAtual = num;
+    provaAtual = 1;
+    notas = [];
+    mostrarMateria(trimestreAtual);
+}
+
+function mostrarMateria(trimestre){
+    document.getElementById("conteudo").innerHTML = materias[trimestre] + 
+    `<button onclick="mostrarProva()">Começar Provas do Trimestre ${trimestre}</button>`;
+    document.getElementById("conteudo").classList.remove("hidden");
+    document.getElementById("areaProva").classList.add("hidden");
+}
+
+function mostrarProva(){
+    document.getElementById("conteudo").classList.add("hidden");
+    document.getElementById("areaProva").classList.remove("hidden");
+
+    let titulosProva = ["Avaliação Inicial","Avaliação Avançada","Prova do Curso","Prova Trimestral"];
+    document.getElementById("tituloProva").innerText = titulosProva[provaAtual-1] + " - Trimestre " + trimestreAtual;
+
+    let perguntas = provas[trimestreAtual][provaAtual-1];
+    let html = "";
+    perguntas.forEach((p,i)=>{
+        html += `<p>${p.perg}</p>`;
+        p.ops.forEach(op=>{
+            html += `<label><input type="radio" name="q${i}" value="${op}"> ${op}</label><br>`;
+        });
+    });
+    document.getElementById("perguntas").innerHTML = html;
+    document.getElementById("resultado").innerText = "";
+}
+
+function corrigir(){
+    let perguntas = provas[trimestreAtual][provaAtual-1];
+    let pontos = 0;
+
+    perguntas.forEach((p,i)=>{
+        let escolha = document.querySelector(`input[name="q${i}"]:checked`);
+        if(escolha && escolha.value === p.res) pontos++;
+    });
+
+    let nota = (pontos / perguntas.length) * 100;
+    notas.push(nota);
+    document.getElementById("resultado").innerText = "Nota: " + nota + "%";
+
+    provaAtual++;
+    if(provaAtual <= 4){
+        setTimeout(mostrarProva,2000);
+    } else {
+        if(trimestreAtual<3){
+            document.getElementById("conteudo").innerHTML = materias[trimestreAtual+1] + 
+            `<button onclick="iniciarTrimestre(${trimestreAtual+1})">Começar Trimestre ${trimestreAtual+1}</button>`;
+            document.getElementById("conteudo").classList.remove("hidden");
+            document.getElementById("areaProva").classList.add("hidden");
+        } else {
+            let media = 0;
+            notas.forEach(n=>media+=n);
+            media = media / notas.length;
+            document.getElementById("areaProva").classList.add("hidden");
+            document.getElementById("certificado").classList.remove("hidden");
+            document.getElementById("mediaFinal").innerText = "Sua média final: " + media.toFixed(2) + "%";
+        }
+    }
+}
+
+function enviarNumero(){
+    let numero = document.getElementById("numero").value;
+    if(numero===""){alert("Digite seu número!"); return;}
+    document.getElementById("mensagemFinal").innerText = "Você receberá seu certificado pelo WhatsApp.";
+}
+</script>
+
+</body>
+</html>

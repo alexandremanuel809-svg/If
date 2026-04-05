@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .container{
+        display: grid;
+        gap: 10px;
+    }
+     header{
+            background-color: #4da3ff;
+            grid-column: span 3;
+        }
+        section{
+            background-color: wheat;
+             grid-column: span 2;
+        }
+        aside{
+            background-color: orange;
+            grid-column: 3;
+        }
+         main{
+            background-color: lime;
+             }
+        footer{
+            background-color: red;
+        }
+</style>
+<body>
+    <div class="container">
+        <header class="item">
+          header
+        </header>
+        <section class="item">
+            section
+        </section>
+        <aside class="item">
+            aside
+        </aside>
+        <main class="item">
+            main
+        </main>
+        <footer class="item">
+            footer
+        </footer>
+    </div>
+</body>
+</html>

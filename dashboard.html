@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CODIFY</title>
+    <link rel="stylesheet" href="Pessoal.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <h2>Menu</h2>
+        <div class="logo">CODIFY</div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="cursos/html/index.html">HTML</a></li>
+            <li><a href="cursos/css/index.html">CSS</a></li>
+            <li><a href="cursos/javascript/index.html">JavaScript</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+            <li><a href="index.html" id="logout">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="dashboard-content">
+        <h1>Bem-vindo, <span id="userName">Usuário</span>!</h1>
+
+        <section class="progress-overview">
+            <h2>Seu Progresso</h2>
+            <canvas id="progressChart" width="400" height="200"></canvas>
+        </section>
+
+        <section class="course-cards">
+            <h2>Cursos Disponíveis</h2>
+            <div class="card" onclick="openCourse('html')">HTML</div>
+            <div class="card" onclick="openCourse('css')">CSS</div>
+            <div class="card" onclick="openCourse('javascript')">JavaScript</div>
+        </section>
+    </main>
+</body>
+
+</html>

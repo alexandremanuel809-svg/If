@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - CODIFY</title>
+    <link rel="stylesheet" href="Pessoal.css">
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <h2>Menu</h2>
+        <div class="logo">CODIFY</div>
+        <ul>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="cursos/html/index.html">HTML</a></li>
+            <li><a href="cursos/css/index.html">CSS</a></li>
+            <li><a href="cursos/javascript/index.html">JavaScript</a></li>
+            <li><a href="perfil.html">Perfil</a></li>
+            <li><a href="index.html" id="logout">Logout</a></li>
+        </ul>
+    </aside>
+
+    <main class="profile-content">
+        <h1>Perfil do Usuário</h1>
+
+        <section class="user-photo">
+            <h2>Foto do Perfil</h2>
+            <img id="userImage" src="images/default-user.png" alt="Foto do Usuário" width="150">
+            <input type="file" id="uploadImage" accept="image/*">
+        </section>
+
+        <section class="user-bio">
+            <h2>Biografia</h2>
+            <textarea id="userBio" placeholder="Escreva sua bio aqui..."></textarea>
+            <button id="saveBio">Salvar Bio</button>
+        </section>
+
+        <section class="user-info">
+            <h2>Informações Pessoais</h2>
+            <p><strong>Nome:</strong> <span id="userName">Usuário</span></p>
+            <p><strong>Email:</strong> <span id="userEmail">usuario@email.com</span></p>
+        </section>
+
+        <section class="user-progress">
+            <h2>Progresso nos Cursos</h2>
+            <ul>
+                <li>HTML: <span id="progressHTML">0%</span></li>
+                <li>CSS: <span id="progressCSS">0%</span></li>
+                <li>JavaScript: <span id="progressJS">0%</span></li>
+            </ul>
+        </section>
+    </main>
+</body>
+
+</html>
